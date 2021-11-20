@@ -2,37 +2,33 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Post;
-import ru.job4j.forum.model.User;
+import ru.job4j.forum.store.PostRepository;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class PostService {
-    private final AtomicInteger counter = new AtomicInteger(2);
-    private final Map<Integer, Post> posts = new HashMap<>();
+    private final PostRepository postRepository;
 
-    public PostService() {
-        User user = User.of("user", "123", "USER");
-        posts.put(1, Post.of(1, "Продаю машину",
-                "Продаю машину ладу 01. Цена 150 000", user.getUsername()));
-        posts.put(2, Post.of(2, "Меняю машину на видеокарту",
-                "Меняю машину  ладу на видеокарту RTX3070", user.getUsername()));
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
     }
 
     public List<Post> getAll() {
-        return new ArrayList<>(posts.values());
+        List<Post> rsl = new ArrayList<>();
+        postRepository.findAll().forEach(rsl::add);
+        return rsl;
     }
 
     public Post savePost(Post post) {
-        if (post.getId() == 0) {
-            post.setId(counter.incrementAndGet());
+        Post oldPost = getPostById(post.getId());
+        if (oldPost != null) {
+            post.setCreated(oldPost.getCreated());
         }
-        posts.put(post.getId(), post);
-        return post;
+        return postRepository.save(post);
     }
 
-    public Post getPost(int id) {
-        return posts.get(id);
+    public Post getPostById(int id) {
+        return postRepository.findById(id).orElse(null);
     }
 }

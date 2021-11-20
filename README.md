@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/AMEMELYANOV/job4j_forum.svg?branch=master)](https://app.travis-ci.com/AMEMELYANOV/job4j_forum)
+[![codecov](https://codecov.io/gh/AMEMELYANOV/job4j_forum/branch/main/graph/badge.svg?token=0cYjrP20tc)](https://codecov.io/gh/AMEMELYANOV/job4j_forum)
 #job4j_forum
 
 #Приложение - форум с использованием Springboot

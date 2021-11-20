@@ -44,7 +44,7 @@
             <tr>
                 <td><c:out value="${post.name}"/></td>
                 <td><c:out value="${post.description}"/></td>
-                <td><c:out value="${post.username}"/></td>
+                <td><c:out value="${post.user.username}"/></td>
                 <td><c:out value="${post.created}"/></td>
             </tr>
             </tbody>
@@ -67,7 +67,7 @@
             <c:forEach items="${comments}" var="comment">
                 <tr>
                     <td><c:out value="${comment.text}"/></td>
-                    <td><c:out value="${comment.username}"/></td>
+                    <td><c:out value="${comment.user.username}"/></td>
                     <td><c:out value="${comment.created}"/></td>
                 </tr>
             </c:forEach>
@@ -81,7 +81,6 @@
         <form name='comment' action="<c:url value='/addComm'/>" method='POST'>
             <table class="table">
                 <input type ='hidden' name = "id" value = "${post.id}"/>
-                <input type='hidden' name="id" value="${post.id}"/>
                 <tr>
                     <td>
                         <input type="submit" name="submit" value="Добавить комментарий">

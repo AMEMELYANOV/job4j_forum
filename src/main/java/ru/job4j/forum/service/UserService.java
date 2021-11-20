@@ -1,29 +1,31 @@
 package ru.job4j.forum.service;
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
+import ru.job4j.forum.model.User;
+import ru.job4j.forum.store.AuthorityRepository;
+import ru.job4j.forum.store.UserRepository;
 
 @Service
 public class UserService {
 
-    private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
+    private final UserRepository userRepository;
+    private AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(InMemoryUserDetailsManager inMemoryUserDetailsManager,
-                       PasswordEncoder passwordEncoder) {
-        this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
+    public UserService(PasswordEncoder passwordEncoder,
+                       UserRepository userRepository,
+                       AuthorityRepository authorityRepository) {
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
     }
 
-    public boolean saveNewUser(String username, String password) {
-        boolean rsl = false;
-        if (!inMemoryUserDetailsManager.userExists(username)) {
-            inMemoryUserDetailsManager.createUser(User.withUsername(username)
-                    .password(password).roles("USER").build());
-            rsl = true;
-        }
-        return rsl;
+    public void saveNewUser(User user) {
+        userRepository.save(user);
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 }

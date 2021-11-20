@@ -32,7 +32,7 @@
     <form name='post' action="<c:url value='/save'/>" method='POST'>
         <table>
             <input type ='hidden' name = "id" value = "${post.id}"/>
-            <input type ='hidden' name = "userName" value = "${post.username}"/>
+            <input type ='hidden' name = "userName" value = "${post.user.username}"/>
             <tr>
                 <td>Название темы:</td>
                 <td><input type='text' name='name' value="${post.name}"/></td>

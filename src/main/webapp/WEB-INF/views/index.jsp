@@ -51,7 +51,7 @@
                 <tr>
                     <td><c:out value="${post.name}"/></td>
                     <td><c:out value="${post.description}"/></td>
-                    <td><c:out value="${post.username}"/></td>
+                    <td><c:out value="${post.user.username}"/></td>
                     <td><c:out value="${post.created}"/></td>
                     <td><input type="button" value="Редактировать"
                                onclick="window.location.href = '${updateButton}'"/></td>

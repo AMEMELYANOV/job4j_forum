@@ -1,18 +1,39 @@
 package ru.job4j.forum.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "comments")
 public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String text;
-    private String username;
-    private final Date created = new Date(System.currentTimeMillis());
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date created = new Date(System.currentTimeMillis());
 
-    public static Comment of(String text, String username) {
+    public static Comment of(String text, User user, Post post) {
         Comment comment = new Comment();
         comment.text = text;
-        comment.username = username;
+        comment.user = user;
+        comment.post = post;
         return comment;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getText() {
@@ -27,16 +48,24 @@ public class Comment {
         return created;
     }
 
-    public String getUsername() {
-        return username;
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(String username) {
-        this.username = username;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     @Override
@@ -48,13 +77,11 @@ public class Comment {
             return false;
         }
         Comment comment = (Comment) o;
-        return Objects.equals(text, comment.text)
-                && Objects.equals(username, comment.username)
-                && Objects.equals(created, comment.created);
+        return Objects.equals(id, comment.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, username, created);
+        return Objects.hash(id);
     }
 }

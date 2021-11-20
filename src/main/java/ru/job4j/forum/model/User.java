@@ -1,15 +1,22 @@
 package ru.job4j.forum.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String password;
     private String username;
     private boolean enabled;
-    private String authority;
+    @ManyToOne
+    @JoinColumn(name = "authority_id")
+    private Authority authority;
 
-    public static User of(String username, String password, String authority) {
+    public static User of(String username, String password, Authority authority) {
         User user = new User();
         user.username = username;
         user.password = password;
@@ -42,11 +49,11 @@ public class User {
         this.username = username;
     }
 
-    public String getAuthority() {
+    public Authority getAuthority() {
         return authority;
     }
 
-    public void setAuthority(String authority) {
+    public void setAuthority(Authority authority) {
         this.authority = authority;
     }
 
@@ -67,15 +74,11 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return id == user.id
-                && enabled == user.enabled
-                && Objects.equals(username, user.username)
-                && Objects.equals(password, user.password)
-                && Objects.equals(authority, user.authority);
+        return id == user.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, enabled, authority);
+        return Objects.hash(id);
     }
 }
