@@ -37,7 +37,7 @@ insert into users (username, enabled, password, authority_id)
 values ('root', true, '$2a$10$S76VzFIaAyjOVHe7LauAe.xnAG6jtL//4ZLUhjzTPBNKuQmfNrT6W',
 (select id from authorities where authority = 'ROLE_ADMIN'));
 
-insert into comments (text, user_id, opst_id) values ('2', 1, 5);
-insert into comments (text, user_id, opst_id) values ('3', 1, 5);
-insert into comments (text, user_id, opst_id) values ('4', 1, 5);
-insert into comments (text, user_id, opst_id) values ('5', 1, 5);
+insert into comments (text, user_id, post_id) values ('2', 1, 5);
+insert into comments (text, user_id, post_id) values ('3', 1, 5);
+insert into comments (text, user_id, post_id) values ('4', 1, 5);
+insert into comments (text, user_id, post_id) values ('5', 1, 5);
